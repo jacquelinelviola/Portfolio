@@ -1,0 +1,88 @@
+<html>
+<head>
+<title>Football scoreboard</title>
+<!-- Load the d3 library. -->
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<link href='http://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
+<style>
+	* {
+		background-color: #ccc;	
+	}
+	#scoreboard {
+		border: 2px solid white;
+		background-color: #2E5CB8;
+		font-family: "Orbitron";
+		font-size: 18px;
+	}
+	#time {
+		stroke: white;
+		stroke-width: 2px;
+	}
+</style>
+</head>
+<body>
+
+<div id="board"></div>
+<script>
+	var scale = 5;
+	var scoreHeight = 35*scale;
+	var scoreWidth = scoreHeight*2;
+	var scoreSVG = d3.select("#board").append("svg").attr("id", "scoreboard").attr("height", scoreHeight).attr("width", scoreWidth);
+
+	// LABELS
+	scoreSVG.append("text").attr("x", 1*scale).attr("y", (scoreHeight/9)+1.1*scale).style("fill", "white").text("HOME");
+	scoreSVG.append("text").attr("x", (scoreWidth*3/4)+2.5*scale).attr("y", (scoreHeight/9)+1.1*scale).style("fill", "white").text("GUEST");
+	scoreSVG.append("text").attr("x", 1*scale).attr("y", (scoreHeight*2/3)).style("fill", "white").text("DOWN");
+	scoreSVG.append("text").attr("x", (scoreWidth/4)).attr("y", (scoreHeight*2/3)).style("fill", "white").text("TO GO");
+	scoreSVG.append("text").attr("x", (scoreWidth/2)).attr("y", (scoreHeight*2/3)).style("fill", "white").text("BALL ON");
+	scoreSVG.append("text").attr("x", (scoreWidth*3/4)+5*scale).attr("y", (scoreHeight*2/3)).style("fill", "white").text("QTR.");
+
+	// TOP ROW OF BOXES
+	var home = scoreSVG.append("rect").attr("x", 1.5*scale).attr("y", (scoreHeight*2/9)).attr("height", (scoreHeight/5)).attr("width", (scoreWidth/6)).style("color", "black").attr("id", "homeScore");
+	var time = scoreSVG.append("rect").attr("x", (scoreWidth/3)+2.5*scale).attr("y", (scoreHeight*2/9)).attr("height", (scoreHeight/5)).attr("width", (scoreWidth/4)).style("color", "black").attr("id", "time");
+	var guest = scoreSVG.append("rect").attr("x", (scoreWidth*3/4)+4*scale).attr("y", (scoreHeight*2/9)).attr("height", (scoreHeight/5)).attr("width", (scoreWidth/6)).style("color", "black").attr("id", "guestScore");
+
+	// BALL POSSESSION
+	scoreSVG.append("rect").attr("x", (scoreWidth/4)+0.7*scale).attr("y", (scoreHeight/3)-1.2*scale).attr("height", (1.5*scale)).attr("width", 3*scale).style("color", "black").attr("id", "homePossession");
+	scoreSVG.append("rect").attr("x", (scoreWidth*3/4)-4*scale).attr("y", (scoreHeight/3)-1.2*scale).attr("height", (1.5*scale)).attr("width", 3*scale).style("color", "black").attr("id", "guestPossession");
+
+	// BOTTOM ROW OF BOXES
+	scoreSVG.append("rect").attr("x", 1.5*scale).attr("y", (scoreHeight*7/9)-1.1*scale).attr("height", (scoreHeight/5)).attr("width", (scoreWidth/6)).style("color", "black").attr("id", "down");
+	scoreSVG.append("rect").attr("x", (scoreWidth/4)+1.1*scale).attr("y", (scoreHeight*7/9)-1.1*scale).attr("height", (scoreHeight/5)).attr("width", (scoreWidth/6)).style("color", "black").attr("id", "togo");
+	scoreSVG.append("rect").attr("x", (scoreWidth/2)+3.5*scale).attr("y", (scoreHeight*7/9)-1.1*scale).attr("height", (scoreHeight/5)).attr("width", (scoreWidth/6)).style("color", "black").attr("id", "ballOn");
+	scoreSVG.append("rect").attr("x", (scoreWidth*3/4)+4*scale).attr("y", (scoreHeight*7/9)-1.1*scale).attr("height", (scoreHeight/5)).attr("width", (scoreWidth/6)).style("color", "black").attr("id", "qtr");
+
+	// DATA
+	var info;
+	d3.csv("superbowl.csv", function (error, data) {
+		info = data;
+	});
+
+	//scoreSVG.selectAll("text").data(info).enter();
+
+	// CHANGE TEXT AS STEP THROUGH TIME
+	scoreSVG.append("text").attr("x", (scoreWidth/2)).attr("y", (scoreHeight/3)+1.2*scale).style("text-anchor", "middle").style("fill", "white").text(function (d) {
+		// console.log(d);
+		return 'hi'
+	});
+	// home score
+	scoreSVG.append("text").attr("x", (scoreWidth/9)).attr("y", (scoreHeight/3)+1.2*scale).style("text-anchor", "middle").style("fill", "white").text("00"); 
+	// guest score
+	scoreSVG.append("text").attr("x", (scoreWidth*8/9)).attr("y", (scoreHeight/3)+1.2*scale).style("text-anchor", "middle").style("fill", "white").text("00"); 
+	// down
+	scoreSVG.append("text").attr("x", (scoreWidth/9)).attr("y", (scoreHeight*6/7)+1.2*scale).style("text-anchor", "middle").style("fill", "white").text("1"); 
+	// to go
+	scoreSVG.append("text").attr("x", (scoreWidth/3)+1.2*scale).attr("y", (scoreHeight*6/7)+1.2*scale).style("text-anchor", "middle").style("fill", "white").text("10"); 
+	// ball on
+	scoreSVG.append("text").attr("x", (scoreWidth*2/3)-2*scale).attr("y", (scoreHeight*6/7)+1.2*scale).style("text-anchor", "middle").style("fill", "white").text("50"); 
+	// qtr
+	scoreSVG.append("text").attr("x", (scoreWidth*8/9)).attr("y", (scoreHeight*6/7)+1.2*scale).style("text-anchor", "middle").style("fill", "white").text("1"); 
+
+	
+	
+
+
+
+</script>
+</body>
+</html>
